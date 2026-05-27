@@ -1,0 +1,582 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Qual caminho escolher?</title>
+<style>
+  :root{
+    --bg:#070b14;
+    --bg2:#0f172a;
+    --card:#111827;
+    --card2:#0b1220;
+    --ink:#f8fafc;
+    --text:#dbe4f0;
+    --muted:#94a3b8;
+    --accent:#60a5fa;
+    --accent2:#22c55e;
+    --danger:#ef4444;
+    --shadow:0 24px 70px rgba(0,0,0,.35);
+    --radius:24px;
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    margin:0;
+    min-height:100vh;
+    font-family:Inter,Segoe UI,Arial,sans-serif;
+    color:var(--text);
+    background:
+      radial-gradient(circle at 10% 10%, rgba(96,165,250,.16), transparent 25%),
+      radial-gradient(circle at 90% 15%, rgba(34,197,94,.10), transparent 22%),
+      linear-gradient(135deg, var(--bg), #0b1220 42%, #050814);
+  }
+  .wrap{
+    max-width:1280px;
+    margin:0 auto;
+    padding:28px 18px 56px;
+  }
+  .hero,.card,.scenario{
+    border:1px solid rgba(148,163,184,.16);
+    box-shadow:var(--shadow);
+    overflow:hidden;
+  }
+  .hero{
+    position:relative;
+    border-radius:30px;
+    background:linear-gradient(180deg, rgba(17,24,39,.96), rgba(11,18,32,.96));
+  }
+  .hero:before{
+    content:"";
+    position:absolute;
+    inset:0;
+    background:
+      linear-gradient(90deg, rgba(255,255,255,.03) 1px, transparent 1px),
+      linear-gradient(rgba(255,255,255,.03) 1px, transparent 1px);
+    background-size:42px 42px;
+    opacity:.25;
+    pointer-events:none;
+  }
+  .heroInner{position:relative; padding:34px 28px 24px;}
+  .badge{
+    display:inline-flex; align-items:center; gap:8px;
+    padding:9px 14px; border-radius:999px;
+    border:1px solid rgba(96,165,250,.35);
+    background:rgba(59,130,246,.12);
+    color:#dbeafe; font-weight:800; font-size:.88rem;
+  }
+  h1{
+    margin:18px 0 10px;
+    font-size:clamp(2rem,5vw,4rem);
+    line-height:.98; letter-spacing:-.05em;
+    color:var(--ink); max-width:980px;
+  }
+  .lead{max-width:980px; margin:0; font-size:1.03rem; line-height:1.8; color:var(--text);}
+  .meta{display:grid; grid-template-columns:repeat(4,1fr); gap:10px; margin-top:14px;}
+  .pill{
+    padding:14px; border-radius:18px;
+    border:1px solid rgba(148,163,184,.16);
+    background:#0b1220;
+  }
+  .pill span{
+    display:block; color:var(--muted);
+    text-transform:uppercase; letter-spacing:.08em; font-size:.74rem;
+    margin-bottom:6px; font-weight:800;
+  }
+  .pill strong{color:#fff}
+  .grid{display:grid; grid-template-columns:1.08fr .92fr; gap:18px; margin-top:18px;}
+  .card{border-radius:24px; background:linear-gradient(180deg, rgba(17,24,39,.96), rgba(10,15,28,.96));}
+  .cardInner{padding:20px}
+  .title{
+    display:flex; align-items:center; gap:10px;
+    margin:0 0 14px; font-size:1.1rem; color:var(--ink);
+    letter-spacing:-.02em;
+  }
+  .dot{
+    width:10px; height:10px; border-radius:50%;
+    background:linear-gradient(135deg,var(--accent),#cbd5e1);
+    box-shadow:0 0 0 6px rgba(96,165,250,.10);
+  }
+  p{line-height:1.7; margin:0 0 12px; color:var(--text)}
+  .muted{color:var(--muted)}
+  .small{font-size:.92rem}
+  .preview{
+    min-height:340px;
+    border-radius:22px;
+    border:1px solid rgba(148,163,184,.18);
+    background:
+      radial-gradient(circle at center, rgba(96,165,250,.10), transparent 46%),
+      #0a1220;
+    display:flex; align-items:center; justify-content:center;
+    padding:18px; overflow:hidden;
+  }
+  .preview img{
+    max-width:100%; max-height:100%;
+    object-fit:contain; border-radius:16px;
+    box-shadow:0 20px 60px rgba(0,0,0,.35);
+    display:block;
+  }
+  .quiz{margin-top:18px; display:grid; gap:18px;}
+  .scenario{border-radius:24px; background:linear-gradient(180deg, rgba(17,24,39,.96), rgba(10,15,28,.96));}
+  .scenarioTop{padding:20px 20px 10px}
+  .scenario h2{margin:0 0 8px; color:var(--ink); font-size:1.1rem;}
+  .options{display:grid; grid-template-columns:repeat(2, minmax(0, 1fr)); gap:12px; padding:0 20px 20px;}
+  .option{
+    border:1px solid rgba(148,163,184,.16);
+    border-radius:16px;
+    padding:14px 15px;
+    background:#0b1220;
+    color:var(--text);
+    font-weight:800;
+    cursor:pointer;
+    text-align:center;
+    transition:.16s ease;
+  }
+  .option:hover{transform:translateY(-1px); border-color:rgba(96,165,250,.45)}
+  .option:disabled{cursor:not-allowed; opacity:.65; transform:none;}
+  .feedback{
+    display:none;
+    margin:0 20px 20px;
+    padding:14px 16px;
+    border-radius:16px;
+    line-height:1.7;
+    font-weight:650;
+  }
+  .ok{display:block; background:rgba(34,197,94,.10); border:1px solid rgba(34,197,94,.25); color:#dcfce7}
+  .bad{display:block; background:rgba(239,68,68,.10); border:1px solid rgba(239,68,68,.25); color:#fee2e2}
+  .below{
+    border-radius:24px;
+    background:linear-gradient(180deg, rgba(17,24,39,.96), rgba(10,15,28,.96));
+    box-shadow:var(--shadow);
+    overflow:hidden;
+  }
+  .belowInner{padding:20px}
+  .justification-box{
+    margin-top:16px;
+    padding:16px;
+    border:1px solid rgba(148,163,184,.16);
+    border-radius:18px;
+    background:#0b1220;
+  }
+  .justification-text{
+    white-space:pre-line;
+    line-height:1.8;
+    color:var(--text);
+    margin:0;
+  }
+  .btns{display:flex; flex-wrap:wrap; gap:10px; margin-top:16px}
+  .btn{
+    appearance:none;
+    border:0;
+    border-radius:14px;
+    padding:12px 16px;
+    font-weight:800;
+    cursor:pointer;
+    transition:.16s ease;
+    letter-spacing:.01em;
+  }
+  .btn:hover{transform:translateY(-1px); filter:brightness(1.03)}
+  .primary{
+    background:linear-gradient(135deg, #2563eb, #60a5fa);
+    color:white;
+  }
+  .secondary{
+    background:#0b1220;
+    color:#e2e8f0;
+    border:1px solid rgba(148,163,184,.18);
+  }
+  .status{
+    margin-top:12px;
+    border-radius:16px;
+    padding:12px 14px;
+    border:1px solid rgba(148,163,184,.16);
+    background:#0b1220;
+    color:var(--text);
+  }
+  .status.ok{border-color:rgba(34,197,94,.24); background:rgba(34,197,94,.08); color:#dcfce7}
+  .status.bad{border-color:rgba(239,68,68,.24); background:rgba(239,68,68,.08); color:#fee2e2}
+  .pdf-surface{
+    position:fixed;
+    left:-10000px;
+    top:0;
+    width:1100px;
+    padding:36px;
+    background:#070b14;
+    color:#fff;
+    pointer-events:none;
+  }
+  .pdf-title{font-size:34px; line-height:1.05; margin:0 0 10px; letter-spacing:-.04em; color:#fff;}
+  .pdf-subtitle{margin:0 0 18px; color:#dbe4f0; line-height:1.7; font-size:16px;}
+  .pdf-box{
+    border:1px solid rgba(148,163,184,.20);
+    border-radius:20px;
+    background:#0b1220;
+    padding:18px;
+    margin-top:18px;
+  }
+  .pdf-img{
+    width:100%;
+    max-height:540px;
+    object-fit:contain;
+    display:block;
+    border-radius:18px;
+    background:#fff;
+  }
+  .pdf-section-title{margin:0 0 10px; color:#fff; font-size:20px;}
+  .pdf-text{white-space:pre-line; color:#dbe4f0; line-height:1.75; font-size:15px; margin:0;}
+  @media (max-width: 980px){
+    .grid,.meta,.options{grid-template-columns:1fr}
+    .heroInner{padding:26px 18px 20px}
+    .cardInner{padding:18px}
+    .belowInner{padding:18px}
+  }
+</style>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+</head>
+<body>
+  <main class="wrap">
+    <section class="hero">
+      <div class="heroInner">
+        <span class="badge">🛡️ Desafio: Escolha o melhor caminho de remediação.</span>
+        <h1>Qual caminho escolher?</h1>
+        <p class="lead">
+          Você é o responsável pela segurança e precisa tomar uma decisão. Analise o fluxo abaixo e escolha a melhor estratégia de remediação com base na disponibilidade de patches, existência de correções alternativas e nível de risco da vulnerabilidade. Uma decisão errada pode comprometer a segurança do ambiente. Avalie com atenção e escolha o melhor caminho.
+        </p>
+        <div class="meta">
+          <div class="pill"><span>Objetivo</span><strong>Reduzir riscos de vulnerabilidades.</strong></div>
+          <div class="pill"><span>Abordagem</span><strong>Decisão baseada em risco e contexto.</strong></div>
+          <div class="pill"><span>Aplicação</span><strong>Ambientes, sistemas e aplicações.</strong></div>
+          <div class="pill"><span>Resultado</span><strong>Ambiente mais seguro e resiliente.</strong></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="grid">
+      <div class="card">
+        <div class="cardInner">
+          <h2 class="title"><span class="dot"></span>Fluxo de remediação</h2>
+          <div class="preview" id="previewBox" style="min-height:700px; background:#ffffff;">
+            <img id="previewImg" alt="Fluxo de remediação" />
+          </div>
+          <div id="imageStatus" class="status">Carregando imagem do fluxo...</div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="cardInner">
+          <h2 class="title"><span class="dot"></span>CENÁRIO:</h2>
+          <p class="muted small" style="margin-bottom:16px;">
+            Dica: Segurança não é decorar resposta. É análise de risco.
+          </p>
+          <div style="display:grid; gap:12px;">
+            <div style="display:flex; gap:12px; align-items:flex-start; padding:12px 14px; border:1px solid rgba(148,163,184,.16); border-radius:16px; background:#0b1220;">
+              <p style="margin:0;">
+                Uma vulnerabilidade crítica com potencial de execução remota de código (RCE) foi identificada em um sistema corporativo exposto à internet e responsável por suportar operações essenciais da organização.<br><br>
+                O fabricante disponibilizou recentemente um patch corretivo para a falha identificada. Entretanto, o sistema afetado integra processos críticos do negócio e qualquer indisponibilidade, degradação de desempenho ou comportamento inesperado pode impactar diretamente a continuidade operacional da empresa.<br><br>
+                Além disso, o ambiente possui restrições operacionais relacionadas a janelas de manutenção, gerenciamento de mudanças e dependências entre aplicações corporativas.<br><br>
+                Com base no fluxo apresentado e considerando boas práticas de gestão de risco, continuidade de negócio e segurança da informação, qual seria a abordagem MAIS adequada inicialmente para tratar essa vulnerabilidade?<br><br>
+                Agora é com vocês.<br>
+                Escolha abaixo o caminho mais seguro para a corporação.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="quiz">
+      <article class="scenario">
+        <div class="scenarioTop">
+          <h2>Desafio prático</h2>
+          <p>Selecione apenas uma opção. Você terá somente uma chance.</p>
+        </div>
+
+        <div class="options">
+          <button class="option" id="btnFluxoDisponivel" type="button">Fluxo - PATCH DISPONÍVEL</button>
+          <button class="option" id="btnFluxoIndisponivel" type="button">Fluxo - PATCH INDISPONÍVEL</button>
+        </div>
+
+        <div id="feedback" class="feedback"></div>
+
+        <div class="belowInner">
+          <div id="justificationBox" class="justification-box" hidden>
+            <h2 class="title" style="margin-top:0;"><span class="dot"></span>JUSTIFICATIVA</h2>
+            <p id="justificationText" class="justification-text"></p>
+
+            <div class="btns">
+              <button class="btn primary" type="button" id="downloadPdfBtn" disabled>Baixar PDF explicativo</button>
+            </div>
+          </div>
+        </div>
+      </article>
+    </section>
+  </main>
+
+  <section class="pdf-surface" id="pdfSurface" aria-hidden="true">
+    <div id="pdfContent">
+      <h1 class="pdf-title">Qual caminho escolher?</h1>
+      <p class="pdf-subtitle">Fluxo de remediação, resposta selecionada e justificativa completa.</p>
+
+      <div class="pdf-box">
+        <h2 class="pdf-section-title">Fluxo de remediação</h2>
+        <img id="pdfTopologyImg" class="pdf-img" alt="Fluxo de remediação para PDF" />
+      </div>
+
+      <div class="pdf-box">
+        <h2 class="pdf-section-title">Resposta do aluno</h2>
+        <p id="pdfAnswerText" class="pdf-text"></p>
+      </div>
+
+      <div class="pdf-box">
+        <h2 class="pdf-section-title">Justificativa</h2>
+        <p id="pdfJustificationText" class="pdf-text"></p>
+      </div>
+    </div>
+  </section>
+
+<script>
+const TOPOLOGY_IMAGE_URL = "./fluxo.png"; // mesmo diretório do HTML no GitHub Pages
+const JUSTIFICATION_TEXT = `
+O que um aluno iniciante costuma fazer?
+
+* Escolhe aplicação do PATCH imediatamente.
+* Tecnicamente parece a melhor opção e o caminho correto.
+
+Mas aplicar um PATCH imediatamente pode estar errado.
+
+Ordem mais inteligente de decisão:
+
+1. PATCH
+Sempre a melhor opção técnica.
+- Resolve definitivamente
+- Mantém suporte do fabricante
+- Reduz superfície de ataque
+
+2. MITIGATE
+Melhor opção operacional temporária.
+- Reduz risco rapidamente
+- Evita downtime
+- Muito usado em produção crítica
+
+3. FIX (corrigir a vulnerabilidade sem aplicar patch oficial)
+Excelente quando existe workaround confiável.
+Workaround: solução alternativa considerada segura e eficaz para reduzir o risco da vulnerabilidade.
+- Rápido
+- Baixo impacto
+- Bom para zero-days
+
+4. CUSTOMIZE
+Muito poderoso, mas perigoso.
+- Escalável
+- Flexível
+- Pode gerar erro operacional
+- Depende da qualidade do script
+
+5. ISOLATE
+Última alternativa.
+- Contém ameaça
+- Impacto operacional alto
+- Pode parar o negócio
+
+O fluxo ensina algo muito importante em Cybersecurity: remediar vulnerabilidade não significa necessariamente aplicar patch.
+
+Embora exista um patch disponibilizado pelo fabricante, sua aplicação imediata pode introduzir riscos operacionais relevantes ao ambiente, principalmente por se tratar de um sistema responsável por processos críticos do negócio.
+
+Atualizações recentes podem ocasionar efeitos inesperados, como incompatibilidade entre aplicações, indisponibilidade temporária de serviços, degradação de desempenho ou falhas em integrações dependentes. Em ambientes críticos, qualquer interrupção não planejada pode gerar impactos financeiros, operacionais e até regulatórios para a organização.
+
+Dessa forma, antes da aplicação definitiva do patch, a abordagem mais adequada inicialmente pode ser a adoção de medidas de mitigação temporária, reduzindo a exposição da vulnerabilidade enquanto a atualização é avaliada dentro do processo de gerenciamento de mudanças e validação operacional da empresa.
+`;
+
+let alreadyAnswered = false;
+let selectedAnswer = null;
+
+const previewImg = document.getElementById('previewImg');
+const btnPatchDisponivel = document.getElementById('btnFluxoDisponivel');
+const btnPatchIndisponivel = document.getElementById('btnFluxoIndisponivel');
+const feedbackEl = document.getElementById('feedback');
+const justificationBox = document.getElementById('justificationBox');
+const justificationText = document.getElementById('justificationText');
+const downloadPdfBtn = document.getElementById('downloadPdfBtn');
+const imageStatus = document.getElementById('imageStatus');
+const pdfTopologyImg = document.getElementById('pdfTopologyImg');
+const pdfAnswerText = document.getElementById('pdfAnswerText');
+const pdfJustificationText = document.getElementById('pdfJustificationText');
+
+justificationText.textContent = JUSTIFICATION_TEXT.trim();
+
+function setImageStatus(kind, text) {
+  imageStatus.className = 'status ' + (kind || '');
+  imageStatus.textContent = text;
+}
+
+previewImg.onload = () => setImageStatus('ok', 'Imagem do fluxo carregada com sucesso.');
+previewImg.onerror = () => setImageStatus('bad', 'Não foi possível carregar a imagem do fluxo. Verifique se topologyVLAN.PNG está na mesma pasta do HTML.');
+previewImg.src = TOPOLOGY_IMAGE_URL;
+
+function lockChoices() {
+  btnPatchDisponivel.disabled = true;
+  btnPatchIndisponivel.disabled = true;
+}
+
+function respond(isCorrect) {
+  if (alreadyAnswered) return;
+  alreadyAnswered = true;
+  selectedAnswer = isCorrect ? 'PATCH_INDISPONIVEL' : 'PATCH_DISPONIVEL';
+
+  feedbackEl.style.display = 'block';
+  justificationBox.hidden = false;
+  downloadPdfBtn.disabled = false;
+
+  if (isCorrect) {
+    feedbackEl.className = 'feedback ok';
+    feedbackEl.textContent = 'Decisão acertada';
+  } else {
+    feedbackEl.className = 'feedback bad';
+    feedbackEl.textContent = 'Risco venceu! Resposta errada.';
+  }
+
+  lockChoices();
+}
+
+btnPatchDisponivel.addEventListener('click', () => respond(false));
+btnPatchIndisponivel.addEventListener('click', () => respond(true));
+
+function waitForImage(imgEl) {
+  return new Promise((resolve, reject) => {
+    if (imgEl.complete && imgEl.naturalWidth > 0) return resolve();
+    imgEl.onload = () => resolve();
+    imgEl.onerror = () => reject(new Error('Falha ao carregar imagem.'));
+  });
+}
+
+function blobToDataURL(blob) {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onload = () => resolve(reader.result);
+    reader.onerror = reject;
+    reader.readAsDataURL(blob);
+  });
+}
+
+async function getImageDataUrl() {
+  // 1) tenta ler o arquivo pela própria URL
+  try {
+    const res = await fetch(TOPOLOGY_IMAGE_URL, { cache: 'no-store' });
+    if (res.ok) {
+      const blob = await res.blob();
+      return await blobToDataURL(blob);
+    }
+  } catch (err) {
+    console.warn('Fetch da imagem falhou, tentando fallback do canvas:', err);
+  }
+
+  // 2) fallback: usa a imagem já renderizada na página
+  try {
+    await waitForImage(previewImg);
+    const canvas = document.createElement('canvas');
+    canvas.width = previewImg.naturalWidth;
+    canvas.height = previewImg.naturalHeight;
+    const ctx = canvas.getContext('2d');
+    ctx.drawImage(previewImg, 0, 0);
+    return canvas.toDataURL('image/png');
+  } catch (err) {
+    console.error('Fallback de canvas falhou:', err);
+    return null;
+  }
+}
+
+function paintPdfBackground(pdf) {
+  pdf.setFillColor(7, 11, 20);
+  pdf.rect(0, 0, 210, 297, 'F');
+}
+
+function addWrappedText(pdf, text, x, y, maxWidth, lineHeight) {
+  const lines = pdf.splitTextToSize(text, maxWidth);
+  let currentY = y;
+  const pageHeight = pdf.internal.pageSize.getHeight();
+
+  for (const line of lines) {
+    if (currentY > pageHeight - 12) {
+      pdf.addPage();
+      paintPdfBackground(pdf);
+      currentY = 18;
+    }
+    pdf.text(line, x, currentY);
+    currentY += lineHeight;
+  }
+
+  return currentY;
+}
+
+async function generatePDF() {
+  if (!alreadyAnswered) {
+    alert('Responda o desafio antes de gerar o PDF.');
+    return;
+  }
+
+  if (!window.jspdf || !window.jspdf.jsPDF) {
+    alert('A biblioteca de PDF não carregou corretamente.');
+    return;
+  }
+
+  const imageDataUrl = await getImageDataUrl();
+  if (!imageDataUrl) {
+    alert('Não foi possível carregar a imagem do fluxo para o PDF.');
+    return;
+  }
+
+  const { jsPDF } = window.jspdf;
+  const pdf = new jsPDF('p', 'mm', 'a4');
+  paintPdfBackground(pdf);
+
+  const answerText =
+    selectedAnswer === 'PATCH_INDISPONIVEL'
+      ? 'Resposta do aluno: Decisão acertada'
+      : 'Resposta do aluno: Risco venceu! Resposta errada.';
+
+  pdf.setTextColor(255, 255, 255);
+  pdf.setFont('helvetica', 'bold');
+  pdf.setFontSize(22);
+  pdf.text('Qual caminho escolher?', 14, 18);
+
+  pdf.setFont('helvetica', 'normal');
+  pdf.setFontSize(11);
+  pdf.text(answerText, 14, 28);
+
+  const pageWidth = 180;
+  const maxImageHeight = 92;
+
+  const img = previewImg;
+  const naturalW = img.naturalWidth || 1200;
+  const naturalH = img.naturalHeight || 700;
+  const scale = Math.min(pageWidth / naturalW, maxImageHeight / naturalH);
+  const drawW = naturalW * scale;
+  const drawH = naturalH * scale;
+  const drawX = (210 - drawW) / 2;
+  const drawY = 34;
+
+  pdf.addImage(imageDataUrl, 'PNG', drawX, drawY, drawW, drawH);
+
+  let y = drawY + drawH + 10;
+  if (y > 240) {
+    pdf.addPage();
+    paintPdfBackground(pdf);
+    y = 18;
+  }
+
+  pdf.setFont('helvetica', 'bold');
+  pdf.setFontSize(14);
+  pdf.text('Justificativa', 14, y);
+  y += 8;
+
+  pdf.setFont('helvetica', 'normal');
+  pdf.setFontSize(10.5);
+  addWrappedText(pdf, JUSTIFICATION_TEXT.trim(), 14, y, 180, 5.2);
+
+  pdf.save('fluxo_explicativo.pdf');
+}
+
+downloadPdfBtn.addEventListener('click', generatePDF);
+</script>
+</body>
+</html>
