@@ -6,25 +6,14 @@
 <title>Qual caminho escolher?</title>
 <style>
   :root{
-    --bg:#070b14;
-    --bg2:#0f172a;
-    --card:#111827;
-    --card2:#0b1220;
-    --ink:#f8fafc;
-    --text:#dbe4f0;
-    --muted:#94a3b8;
-    --accent:#60a5fa;
-    --accent2:#22c55e;
-    --danger:#ef4444;
-    --shadow:0 24px 70px rgba(0,0,0,.35);
+    --bg:#070b14; --card:#111827; --text:#dbe4f0; --muted:#94a3b8;
+    --ink:#f8fafc; --accent:#60a5fa; --shadow:0 24px 70px rgba(0,0,0,.35);
     --radius:24px;
   }
   *{box-sizing:border-box}
   html{scroll-behavior:smooth}
   body{
-    margin:0;
-    min-height:100vh;
-    font-family:Inter,Segoe UI,Arial,sans-serif;
+    margin:0; min-height:100vh; font-family:Inter,Segoe UI,Arial,sans-serif;
     color:var(--text);
     background:
       radial-gradient(circle at 10% 10%, rgba(96,165,250,.16), transparent 25%),
@@ -41,38 +30,18 @@
   }
   .hero{position:relative;border-radius:30px}
   .hero:before{
-    content:"";
-    position:absolute; inset:0;
+    content:""; position:absolute; inset:0;
     background:
       linear-gradient(90deg, rgba(255,255,255,.03) 1px, transparent 1px),
       linear-gradient(rgba(255,255,255,.03) 1px, transparent 1px);
-    background-size:42px 42px;
-    opacity:.25;
-    pointer-events:none;
+    background-size:42px 42px; opacity:.25; pointer-events:none;
   }
   .heroInner{position:relative;padding:34px 28px 24px}
   .heroLogo{
-    position:absolute;
-    right:35px;
-    top:50%;
-    transform:translateY(-50%);
-
-    width:180px;
-    height:180px;
-
-    display:flex;
-    align-items:center;
-    justify-content:center;
-
-    opacity:.95;
+    position:absolute; right:35px; top:50%; transform:translateY(-50%);
+    width:110px; height:110px; display:flex; align-items:center; justify-content:center; opacity:.95;
   }
-
-  .heroLogo img{
-    max-width:100%;
-    max-height:100%;
-    object-fit:contain;
-    display:block;
-  }
+  .heroLogo img{max-width:100%; max-height:100%; object-fit:contain; display:block}
   .badge{
     display:inline-flex; align-items:center; gap:8px;
     padding:9px 14px; border-radius:999px;
@@ -82,64 +51,107 @@
   }
   h1{
     margin:18px 0 10px;
-    font-size:clamp(2rem,5vw,4rem);
-    line-height:.98; letter-spacing:-.05em;
-    color:var(--ink); max-width:980px;
-    padding-right:160px;
+    font-size:clamp(2rem,5vw,4rem); line-height:.98; letter-spacing:-.05em;
+    color:var(--ink); max-width:980px; padding-right:160px;
   }
   .lead{max-width:980px;margin:0;font-size:1.03rem;line-height:1.8;color:var(--text)}
   .meta{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:14px}
-  .pill{padding:14px;border-radius:18px;border:1px solid rgba(148,163,184,.16);background:#0b1220}
-  .pill span{display:block;color:var(--muted);text-transform:uppercase;letter-spacing:.08em;font-size:.74rem;margin-bottom:6px;font-weight:800}
+  .pill{
+    padding:14px;border-radius:18px;
+    border:1px solid rgba(148,163,184,.16); background:#0b1220;
+  }
+  .pill span{
+    display:block;color:var(--muted); text-transform:uppercase;
+    letter-spacing:.08em;font-size:.74rem;margin-bottom:6px;font-weight:800;
+  }
   .pill strong{color:#fff}
   .grid{display:grid;grid-template-columns:1.08fr .92fr;gap:18px;margin-top:18px}
   .cardInner{padding:20px}
-  .title{display:flex;align-items:center;gap:10px;margin:0 0 14px;font-size:1.1rem;color:var(--ink);letter-spacing:-.02em}
-  .dot{width:10px;height:10px;border-radius:50%;background:linear-gradient(135deg,var(--accent),#cbd5e1);box-shadow:0 0 0 6px rgba(96,165,250,.10)}
+  .title{
+    display:flex;align-items:center;gap:10px;margin:0 0 14px;
+    font-size:1.1rem;color:var(--ink);letter-spacing:-.02em;
+  }
+  .dot{
+    width:10px;height:10px;border-radius:50%;
+    background:linear-gradient(135deg,var(--accent),#cbd5e1);
+    box-shadow:0 0 0 6px rgba(96,165,250,.10);
+  }
   p{line-height:1.7;margin:0 0 12px;color:var(--text)}
   .muted{color:var(--muted)}
   .small{font-size:.92rem}
   .preview{
-    min-height:340px;
-    border-radius:22px;
+    min-height:340px; border-radius:22px;
     border:1px solid rgba(148,163,184,.18);
     background:radial-gradient(circle at center, rgba(96,165,250,.10), transparent 46%), #0a1220;
     display:flex;align-items:center;justify-content:center;
     padding:18px;overflow:hidden;
   }
-  .preview img{max-width:100%;max-height:100%;object-fit:contain;border-radius:16px;box-shadow:0 20px 60px rgba(0,0,0,.35);display:block}
+  .preview img{
+    max-width:100%;max-height:100%; object-fit:contain;border-radius:16px;
+    box-shadow:0 20px 60px rgba(0,0,0,.35); display:block;
+  }
   .quiz{margin-top:18px;display:grid;gap:18px}
   .scenarioTop{padding:20px 20px 10px}
   .scenario h2{margin:0 0 8px;color:var(--ink);font-size:1.1rem}
   .options{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;padding:0 20px 20px}
-  .option{border:1px solid rgba(148,163,184,.16);border-radius:16px;padding:14px 15px;background:#0b1220;color:var(--text);font-weight:800;cursor:pointer;text-align:center;transition:.16s ease}
+  .option{
+    border:1px solid rgba(148,163,184,.16); border-radius:16px; padding:14px 15px;
+    background:#0b1220;color:var(--text);font-weight:800;cursor:pointer;text-align:center;transition:.16s ease;
+  }
   .option:hover{transform:translateY(-1px);border-color:rgba(96,165,250,.45)}
   .option:disabled{cursor:not-allowed;opacity:.65;transform:none}
-  .feedback{display:none;margin:0 20px 20px;padding:14px 16px;border-radius:16px;line-height:1.7;font-weight:650}
+  .feedback{
+    display:none;margin:0 20px 20px;padding:14px 16px;border-radius:16px;line-height:1.7;font-weight:650;
+  }
   .ok{display:block;background:rgba(34,197,94,.10);border:1px solid rgba(34,197,94,.25);color:#dcfce7}
   .bad{display:block;background:rgba(239,68,68,.10);border:1px solid rgba(239,68,68,.25);color:#fee2e2}
   .belowInner{padding:20px}
-  .justification-box{margin-top:16px;padding:16px;border:1px solid rgba(148,163,184,.16);border-radius:18px;background:#0b1220}
+  .justification-box{
+    margin-top:16px;padding:16px;border:1px solid rgba(148,163,184,.16);
+    border-radius:18px;background:#0b1220;
+  }
   .justification-text{white-space:pre-line;line-height:1.8;color:var(--text);margin:0}
   .btns{display:flex;flex-wrap:wrap;gap:10px;margin-top:16px}
-  .btn{appearance:none;border:0;border-radius:14px;padding:12px 16px;font-weight:800;cursor:pointer;transition:.16s ease;letter-spacing:.01em}
+  .btn{
+    appearance:none;border:0;border-radius:14px;padding:12px 16px;
+    font-weight:800;cursor:pointer;transition:.16s ease;letter-spacing:.01em;
+  }
   .btn:hover{transform:translateY(-1px);filter:brightness(1.03)}
   .primary{background:linear-gradient(135deg,#2563eb,#60a5fa);color:white}
   .secondary{background:#0b1220;color:#e2e8f0;border:1px solid rgba(148,163,184,.18)}
-  .status{margin-top:12px;border-radius:16px;padding:12px 14px;border:1px solid rgba(148,163,184,.16);background:#0b1220;color:var(--text)}
+  .status{
+    margin-top:12px;border-radius:16px;padding:12px 14px;
+    border:1px solid rgba(148,163,184,.16);background:#0b1220;color:var(--text);
+  }
   .status.ok{border-color:rgba(34,197,94,.24);background:rgba(34,197,94,.08);color:#dcfce7}
   .status.bad{border-color:rgba(239,68,68,.24);background:rgba(239,68,68,.08);color:#fee2e2}
   .start-gate{margin-top:18px}
   .start-gate-inner{padding:20px}
-  .start-form{display:grid;grid-template-columns:1fr auto;gap:12px;align-items:end;margin-top:10px}
-  .start-form label{display:block;margin-bottom:7px;color:var(--muted);font-weight:800;font-size:.90rem}
-  .start-form input{width:100%;border:1px solid rgba(148,163,184,.18);background:#0b1220;color:#fff;border-radius:14px;padding:14px 15px;outline:none;font-family:inherit}
-  .start-form input:focus{border-color:rgba(96,165,250,.75);box-shadow:0 0 0 4px rgba(96,165,250,.12)}
-  .pdf-surface{position:fixed;left:-10000px;top:0;width:1100px;padding:36px;background:#070b14;color:#fff;pointer-events:none}
+  .start-form{
+    display:grid;grid-template-columns:1fr auto;gap:12px;align-items:end;margin-top:10px;
+  }
+  .start-form label{
+    display:block;margin-bottom:7px;color:var(--muted);font-weight:800;font-size:.90rem;
+  }
+  .start-form input{
+    width:100%;border:1px solid rgba(148,163,184,.18);background:#0b1220;color:#fff;
+    border-radius:14px;padding:14px 15px;outline:none;font-family:inherit;
+  }
+  .start-form input:focus{
+    border-color:rgba(96,165,250,.75);box-shadow:0 0 0 4px rgba(96,165,250,.12);
+  }
+  .pdf-surface{
+    position:fixed; left:-10000px; top:0; width:1100px; padding:36px;
+    background:#070b14; color:#fff; pointer-events:none;
+  }
   .pdf-title{font-size:34px;line-height:1.05;margin:0 0 10px;letter-spacing:-.04em;color:#fff}
   .pdf-subtitle{margin:0 0 18px;color:#dbe4f0;line-height:1.7;font-size:16px}
-  .pdf-box{border:1px solid rgba(148,163,184,.20);border-radius:20px;background:#0b1220;padding:18px;margin-top:18px}
-  .pdf-img{width:100%;max-height:540px;object-fit:contain;display:block;border-radius:18px;background:#fff}
+  .pdf-box{
+    border:1px solid rgba(148,163,184,.20);border-radius:20px;background:#0b1220;padding:18px;margin-top:18px;
+  }
+  .pdf-img{
+    width:100%;max-height:540px;object-fit:contain;display:block;border-radius:18px;background:#fff;
+  }
   .pdf-section-title{margin:0 0 10px;color:#fff;font-size:20px}
   .pdf-text{white-space:pre-line;color:#dbe4f0;line-height:1.75;font-size:15px;margin:0}
   @media (max-width: 980px){
@@ -196,7 +208,7 @@
                 Além disso, o ambiente possui restrições operacionais relacionadas a janelas de manutenção, gerenciamento de mudanças e dependências entre aplicações corporativas.<br><br>
                 Com base no fluxo apresentado e considerando boas práticas de gestão de risco, continuidade de negócio e segurança da informação, qual seria a abordagem MAIS adequada inicialmente para tratar essa vulnerabilidade?<br><br>
                 Agora é com vocês.<br>
-                Escolha abaixo a opção correta e seguro para a corporação.
+                Escolha abaixo o caminho mais seguro para a corporação.
               </p>
             </div>
           </div>
@@ -252,15 +264,18 @@
     <div id="pdfContent">
       <h1 class="pdf-title">Qual caminho escolher?</h1>
       <p class="pdf-subtitle">Fluxo de remediação, resposta selecionada e justificativa completa.</p>
+
       <div class="pdf-box">
         <h2 class="pdf-section-title">Fluxo de remediação</h2>
         <img id="pdfTopologyImg" class="pdf-img" alt="Fluxo de remediação para PDF" />
       </div>
+
       <div class="pdf-box">
         <h2 class="pdf-section-title">Resposta do aluno</h2>
         <p id="pdfNameText" class="pdf-text"></p>
         <p id="pdfAnswerText" class="pdf-text" style="margin-top:10px;"></p>
       </div>
+
       <div class="pdf-box">
         <h2 class="pdf-section-title">Justificativa</h2>
         <p id="pdfJustificationText" class="pdf-text"></p>
@@ -269,7 +284,7 @@
   </section>
 
 <script>
-const TOPOLOGY_IMAGE_URL = "fluxo.png"; // ajuste para o nome real do arquivo no Git
+const TOPOLOGY_IMAGE_URL = "topologyVLAN.PNG";
 const WEB_APP_URL = "COLE_AQUI_A_URL_DO_SEU_WEB_APP";
 
 const JUSTIFICATION_TEXT = `
@@ -377,7 +392,7 @@ function setImageStatus(kind, text) {
 }
 
 previewImg.onload = () => setImageStatus('ok', 'Imagem do fluxo carregada com sucesso.');
-previewImg.onerror = () => setImageStatus('bad', 'Não foi possível carregar a imagem do fluxo. Verifique se fluxo.png está na mesma pasta do HTML.');
+previewImg.onerror = () => setImageStatus('bad', 'Não foi possível carregar a imagem do fluxo. Verifique se topologyVLAN.PNG está na mesma pasta do HTML.');
 previewImg.src = TOPOLOGY_IMAGE_URL;
 
 function lockChoices() {
@@ -386,7 +401,7 @@ function lockChoices() {
 }
 
 async function sendResultToSheet(payload) {
-  if (!WEB_APP_URL || WEB_APP_URL.includes('https://script.google.com/macros/s/AKfycbxkRJfYPfoMZJL1qM54ObXqHrkEihdk3o2ezYR4zm8iCGyjTfIdL_tp9a6EYRZQ_nTQ/exec')) return;
+  if (!WEB_APP_URL || WEB_APP_URL.includes('COLE_AQUI')) return;
 
   try {
     await fetch(WEB_APP_URL, {
@@ -535,6 +550,11 @@ async function generatePDF() {
   pdf.text(`Aluno: ${name || 'Não informado'}`, 14, 28);
   pdf.text(answerText, 14, 35);
 
+  pdfNameText.textContent = `Nome: ${name || 'Não informado'}`;
+  pdfAnswerText.textContent = answerText;
+  pdfJustificationText.textContent = JUSTIFICATION_TEXT.trim();
+  pdfTopologyImg.src = previewImg.currentSrc || previewImg.src || TOPOLOGY_IMAGE_URL;
+
   const img = previewImg;
   const naturalW = img.naturalWidth || 1200;
   const naturalH = img.naturalHeight || 700;
@@ -571,4 +591,3 @@ downloadPdfBtn.addEventListener('click', generatePDF);
 </script>
 </body>
 </html>
-
