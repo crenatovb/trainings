@@ -386,7 +386,7 @@ function lockChoices() {
 }
 
 async function sendResultToSheet(payload) {
-  if (!WEB_APP_URL || WEB_APP_URL.includes('COLE_AQUI')) return;
+  if (!WEB_APP_URL || WEB_APP_URL.includes('https://script.google.com/macros/s/AKfycbzWIOMEfXFUgjJsYpTFYx1W-2DTIFnfTh10deaZlwV-qqEb3jd7kd4TapZ4QcyHG9WsjA/exec')) return;
 
   try {
     await fetch(WEB_APP_URL, {
