@@ -392,7 +392,7 @@ function setImageStatus(kind, text) {
 }
 
 previewImg.onload = () => setImageStatus('ok', 'Imagem do fluxo carregada com sucesso.');
-previewImg.onerror = () => setImageStatus('bad', 'Não foi possível carregar a imagem do fluxo. Verifique se topologyVLAN.PNG está na mesma pasta do HTML.');
+previewImg.onerror = () => setImageStatus('bad', 'Não foi possível carregar a imagem do fluxo. Verifique se fluxo.png está na mesma pasta do HTML.');
 previewImg.src = TOPOLOGY_IMAGE_URL;
 
 function lockChoices() {
