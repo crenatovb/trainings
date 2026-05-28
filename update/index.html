@@ -283,7 +283,7 @@
   </section>
 
 <script>
-const TOPOLOGY_IMAGE_URL = "topologyVLAN.PNG";
+const TOPOLOGY_IMAGE_URL = "fluxo.png";
 const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbw1dDJsinhjw5HsFQkwn6b3CNYxDsseVsp-0KP5dUsn0br1IKESlZxxPXNYnPWrb6ddwQ/exec";
 
 const JUSTIFICATION_TEXT = `
@@ -389,7 +389,7 @@ function setImageStatus(kind, text) {
 }
 
 previewImg.onload = () => setImageStatus('ok', 'Imagem do fluxo carregada com sucesso.');
-previewImg.onerror = () => setImageStatus('bad', 'Não foi possível carregar a imagem do fluxo. Verifique se topologyVLAN.PNG está na mesma pasta do HTML.');
+previewImg.onerror = () => setImageStatus('bad', 'Não foi possível carregar a imagem do fluxo. Verifique se fluxo.png está na mesma pasta do HTML.');
 previewImg.src = TOPOLOGY_IMAGE_URL;
 
 function lockChoices() {
